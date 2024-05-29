@@ -201,9 +201,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         b: gb,
         c: gc,
     };
-    let gas_limit = 800_000;
+    let gas_append = 1000;
     let method = contract.verify_tx(proof, public_inputs, commitments_xy);
-    let binding = method.gas(gas_limit);
+    let gas_estimate = method.estimate_gas().await?;
+    println!("Estimated Gas: {:?}", gas_estimate);
+    let binding = method.gas(gas_estimate + gas_append);
     let tx = binding.send().await?;
     let tx_hash = tx.tx_hash();
     println!("Transaction hash: {:?}", tx_hash);
