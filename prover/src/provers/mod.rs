@@ -25,8 +25,9 @@ pub trait Prover<T> {
     fn prove(&self, ctx: &T) -> Result<()>;
 }
 
-const DEGREE_BITS_RANGE: [[std::ops::Range<usize>; 6]; 7] = [
+const DEGREE_BITS_RANGE: [[std::ops::Range<usize>; 6]; 8] = [
     [10..21, 10..15, 10..18, 8..15, 10..21, 15..23],
+    [10..21, 12..22, 12..21, 8..21, 10..21, 13..23],
     [10..21, 12..22, 12..21, 8..21, 10..21, 13..23],
     [10..21, 12..22, 12..21, 8..21, 10..21, 13..23],
     [10..21, 12..22, 12..21, 8..21, 10..21, 13..23],
@@ -49,6 +50,7 @@ lazy_static! {
         map.insert(16384, 1);
         map.insert(32768, 2);
         map.insert(65536, 3);
+        map.insert(131072, 3);
         map.insert(262144, 4);
         // map.insert(524288, 5);
         // map.insert(1048576, 6);
