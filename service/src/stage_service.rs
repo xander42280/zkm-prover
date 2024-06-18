@@ -108,16 +108,23 @@ impl StageService for StageServiceSVC {
             let response = stage_service::GenerateProofResponse {
                 proof_id: request.get_ref().proof_id.clone(),
                 status: stage_service::Status::InvalidParameter as u32,
-                error_message: "invalid seg_size".to_string(),
+                error_message: "invalid seg_size support [65536-262144]".to_string(),
                 ..Default::default()
             };
             return Ok(Response::new(response));
         }
         // check signature
+        let user_address: String;
         match self.valid_signature(request.get_ref()) {
             Ok(address) => {
                 // check white list
                 let users = self.db.get_user(&address).await.unwrap();
+                log::info!(
+                    "proof_id:{:?} address:{:?} exists:{:?}",
+                    request.get_ref().proof_id,
+                    address,
+                    users.is_empty(),
+                );
                 if users.is_empty() {
                     let response = stage_service::GenerateProofResponse {
                         proof_id: request.get_ref().proof_id.clone(),
@@ -127,6 +134,7 @@ impl StageService for StageServiceSVC {
                     };
                     return Ok(Response::new(response));
                 }
+                user_address = users[0].address.clone();
             }
             Err(e) => {
                 let response = stage_service::GenerateProofResponse {
@@ -211,6 +219,7 @@ impl StageService for StageServiceSVC {
             .db
             .insert_stage_task(
                 &request.get_ref().proof_id,
+                &user_address,
                 stage_service::Status::Computing as i32,
                 &serde_json::to_string(&generate_context).unwrap(),
             )
