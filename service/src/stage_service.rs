@@ -94,6 +94,11 @@ impl StageService for StageServiceSVC {
                         fileserver_url,
                         request.get_ref().proof_id
                     );
+                    response.stark_download_url = format!(
+                        "{}/{}/aggregate/proof_with_public_inputs.json",
+                        fileserver_url,
+                        request.get_ref().proof_id
+                    );
                 }
             }
             Ok(Response::new(response))
@@ -237,10 +242,19 @@ impl StageService for StageServiceSVC {
                 ),
                 None => "".to_string(),
             };
+            let stark_download_url = match &self.fileserver_url {
+                Some(fileserver_url) => format!(
+                    "{}/{}/aggregate/proof_with_public_inputs.json",
+                    fileserver_url,
+                    request.get_ref().proof_id
+                ),
+                None => "".to_string(),
+            };
             let response = stage_service::GenerateProofResponse {
                 proof_id: request.get_ref().proof_id.clone(),
                 status: stage_service::Status::Computing as u32,
                 download_url,
+                stark_download_url,
                 ..Default::default()
             };
             Ok(Response::new(response))
