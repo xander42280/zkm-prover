@@ -41,6 +41,18 @@ impl Executor {
                     state.patch_elf(&file);
                     state.patch_stack(args);
 
+                    // public_input_stream
+                    if !ctx.public_input_path.is_empty() {
+                        let data = file::new(&ctx.public_input_path).read().expect("read public_input_stream failed");
+                        state.add_input_stream(&data);
+
+                        // private_input_stream
+                        if !ctx.private_input_path.is_empty() {
+                            let data = file::new(&ctx.private_input_path).read().expect("read private_input_stream failed");
+                            state.add_input_stream(&data);
+                        }
+                    }
+
                     let block_no = block_no.parse::<_>().unwrap_or(0);
                     if block_no > 0 {
                         log::info!("split set input data {}", input_path);
