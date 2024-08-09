@@ -47,6 +47,7 @@ impl Executor {
                             .read()
                             .expect("read public_input_stream failed");
                         state.add_input_stream(&data);
+                        log::info!("split set public_input data {}", data.len());
 
                         // private_input_stream
                         if !ctx.private_input_path.is_empty() {
@@ -54,6 +55,7 @@ impl Executor {
                                 .read()
                                 .expect("read private_input_stream failed");
                             state.add_input_stream(&data);
+                            log::info!("split set private_input data {}", data.len());
                         }
                     } else {
                         state.patch_stack(args);
