@@ -13,6 +13,7 @@ pub struct SplitContext {
 }
 
 impl SplitContext {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         basedir: &str,
         elf_path: &str,

@@ -187,6 +187,9 @@ impl StageService for StageServiceSVC {
             }
 
             let input_stream_dir = format!("{}/input_stream", dir_path);
+            file::new(&input_stream_dir)
+                .create_dir_all()
+                .map_err(|e| Status::internal(e.to_string()))?;
             let public_input_stream_path = if request.get_ref().public_input_stream.is_empty() {
                 "".to_string()
             } else {
@@ -196,7 +199,7 @@ impl StageService for StageServiceSVC {
                     .map_err(|e| Status::internal(e.to_string()))?;
                 public_input_stream_path
             };
-            
+
             let private_input_stream_path = if request.get_ref().private_input_stream.is_empty() {
                 "".to_string()
             } else {

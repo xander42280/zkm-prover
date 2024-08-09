@@ -43,12 +43,16 @@ impl Executor {
 
                     // public_input_stream
                     if !ctx.public_input_path.is_empty() {
-                        let data = file::new(&ctx.public_input_path).read().expect("read public_input_stream failed");
+                        let data = file::new(&ctx.public_input_path)
+                            .read()
+                            .expect("read public_input_stream failed");
                         state.add_input_stream(&data);
 
                         // private_input_stream
                         if !ctx.private_input_path.is_empty() {
-                            let data = file::new(&ctx.private_input_path).read().expect("read private_input_stream failed");
+                            let data = file::new(&ctx.private_input_path)
+                                .read()
+                                .expect("read private_input_stream failed");
                             state.add_input_stream(&data);
                         }
                     }
