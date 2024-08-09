@@ -165,7 +165,7 @@ impl Stage {
             .clone_from(&self.generate_context.seg_path);
         self.split_task
             .public_input_path
-            .clone_from(&self.generate_context.private_input_path);
+            .clone_from(&self.generate_context.public_input_path);
         self.split_task
             .private_input_path
             .clone_from(&self.generate_context.private_input_path);
