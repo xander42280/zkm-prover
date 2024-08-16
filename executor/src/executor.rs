@@ -95,8 +95,8 @@ impl Executor {
                     }
                     instrumented_state.split_segment(true, &seg_path_clone, new_write);
                     // write public_values_stream
-                    file::new(&ctx.output_path)
-                        .write_all(&instrumented_state.state.public_values_stream)
+                    let _ = file::new(&ctx.output_path)
+                        .write(&instrumented_state.state.public_values_stream)
                         .unwrap();
                     return Ok(true);
                 }
