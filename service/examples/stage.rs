@@ -129,8 +129,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     match status {
                         crate::stage_service::Status::Success => {
                             log::info!(
-                                "generate_proof success public_inputs_size: {}",
+                                "generate_proof success public_inputs_size: {}, output_size: {}",
                                 get_status_response.proof_with_public_inputs.len(),
+                                get_status_response.output_stream.len(),
                             );
                             let output_dir = Path::new(&output_dir);
                             let public_inputs_path = output_dir.join("proof_with_public_inputs");

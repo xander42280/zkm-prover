@@ -42,6 +42,7 @@ args | STRING | NO | ARGS for `elf_data`.
 signature | STRING | YES | Signature.
 public_input_stream | BYTES | NO | Public input, Will be passed as the first parameter to the `elf_data`.
 private_input_stream | BYTES | NO | private input, Will be passed as the second parameter to the `elf_data`.
+execute_only | BOOL | NO | Default false.
 
 
 ### GenerateProofResponse
@@ -54,6 +55,7 @@ proof_id | STRING | YES | Request.proof_id.
 proof_url | STRING | YES | After the task is completed, you can download the snark proof from this URL.
 stark_proof_url | STRING | YES | After the task is completed, you can download the stark proof from this URL.
 solidity_verifier_url | STRING | YES | After the task is completed, you can download the verifier's contract from this URL.
+output_stream | BYTES | NO | Guest program output.
 
 ## GetStatus
 
@@ -73,3 +75,4 @@ proof_with_public_inputs | BYTES | NO | Proof of binary data.
 proof_url | STRING | YES | After the task is completed, you can download the snark proof from this URL.
 stark_proof_url | STRING | YES | After the task is completed, you can download the stark proof from this URL.
 solidity_verifier_url | STRING | YES | After the task is completed, you can download the verifier's contract from this URL.
+output_stream | BYTES | NO | Guest program output.
